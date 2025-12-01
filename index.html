@@ -5,19 +5,16 @@
     <meta charset="UTF-8">
     <meta name="description" content="A simple calculador">
     <script defer src="scripts.js"></script>
-    <style>
-        body {
-            background-color: steelblue;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <main id="calculador">
+    <main class="calculador" id="calculador">
         <div class="screen">
-            <input id="input" type="text">
+            <div class="screen__inner screen__inner--up" id="sup-input"></div>
+            <input class="screen__inner screen__inner--down" id="input" type="text">
         </div>
-        <div id="teclado"></div>
+        <div class="teclado" id="teclado"></div>
 
     </main>
 </body>

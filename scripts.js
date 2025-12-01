@@ -1,24 +1,24 @@
 const buttons = [
+  "=",
+  0,
+  ".",
+  "+",
+
   1,
   2,
   3,
+
   4,
   5,
   6,
+  "-",
   7,
   8,
   9,
-  0,
-  ".",
-  "=",
-  "+",
-  "-",
   "*",
   "/",
-  "(",
-  ")",
-  "DEL",
   "C",
+  "DEL",
 ];
 
 const calculadora = document.getElementById("calculador");
@@ -26,10 +26,12 @@ const display = document.getElementById("input");
 const teclado = document.getElementById("teclado");
 
 const createHTMLButtons = function (buttons) {
+  buttons.reverse();
   const contenedor = document.createElement("div");
   contenedor.id = "buttons";
+  contenedor.classList.add("keyboard");
   for (let i = 0; i < buttons.length; i++) {
-    let elemento = document.createElement("button");
+    let elemento = document.createElement("div");
     elemento.textContent = buttons[i];
     elemento.classList.add("calculatorButton");
     elemento.dataset.value = buttons[i];
