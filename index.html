@@ -3,35 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi calc</title>
-    <script defer src="juego.js"></script>
+    <meta name="description" content="A simple calculador">
+    <script defer src="scripts.js"></script>
     <style>
-        .hola {
-            width: 6rem;
-            background-color: firebrick;
-            border-radius: .3em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-left: auto;
-            margin-right: auto;
-            color: aliceblue;
-            font-family: sans-serif;
-            padding: 2rem 3rem;
-            box-sizing: border-box;
-
-        }
-
         body {
-            margin-top: 2rem;
+            background-color: steelblue;
         }
     </style>
 </head>
 
-<body id="soyElBody">
-    <button id="hola" class="hola">Hola</button>
+<body>
+    <main id="calculador">
+        <div class="screen">
+            <input id="input" type="text">
+        </div>
+        <div id="teclado"></div>
+
+    </main>
 </body>
 
 </html>
