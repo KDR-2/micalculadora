@@ -3,26 +3,26 @@ const buttons = [
   0,
   ".",
   "+",
-
-  1,
-  2,
   3,
-
-  4,
-  5,
-  6,
+  2,
+  1,
   "-",
-  7,
-  8,
-  9,
+  6,
+  5,
+  4,
   "*",
+  9,
+  8,
+  7,
   "/",
-  "C",
   "DEL",
+  "C",
+  "CE",
 ];
 
 const calculadora = document.getElementById("calculador");
 const display = document.getElementById("input");
+const displayTop = document.getElementById("sup-input");
 const teclado = document.getElementById("teclado");
 
 const createHTMLButtons = function (buttons) {
