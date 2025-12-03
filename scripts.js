@@ -20,10 +20,19 @@ const buttons = [
   "CE",
 ];
 
+const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const signos = [".", "+", "-", "*", "/"];
+const funciones = ["DEL", "C", "CE", "="];
+const botones = [...numbers, ...signos, ...funciones];
+
 const calculadora = document.getElementById("calculador");
 const display = document.getElementById("input");
 const displayTop = document.getElementById("sup-input");
 const teclado = document.getElementById("teclado");
+let n1 = "";
+let n2 = "";
+let operator = "";
+let result = "";
 
 const createHTMLButtons = function (buttons) {
   buttons.reverse();
@@ -39,57 +48,56 @@ const createHTMLButtons = function (buttons) {
   }
   return contenedor;
 };
-// Serie de evaluaciones para poder escribir el contenido de un boton en la pantalla de la calculadora:
-// Un número será seraparado de otro siempre que haya un signo - cada número permite un . para separar decimales - * y / no puede colocarse con la pantalla vacia, no se puede cerrar un parentesis sin
-const verifyButton = function (botonPulsado) {
-  const signos = [".", "+", "-", "*", "/", "(", ")"];
 
-  let lastCharOfScreen = display.value[display.value.length - 1];
+const borrarUltimoCaracter = (datos) => datos.slice(0, -1);
+const operar = function () {};
 
-  if (
-    lastCharOfScreen === botonPulsado.dataset.value &&
-    signos.includes(lastCharOfScreen)
-  )
-    return true;
-  if (botonPulsado.dataset.value === undefined) return true;
+const pulsarBoton = function (targetValue) {
+  if (funciones.includes(targetValue)) {
+    switch (targetValue) {
+      case "CE":
+        n1 = "";
+        n2 = "";
+        operator = "";
+        result = "";
+        break;
+      case "C":
+        n1 = "";
+        operator = "";
+        break;
+      case "DEL":
+        n1 = borrarUltimoCaracter(n1);
+        break;
+      case "=":
+        operar();
+        break;
+    }
+  }
+  if (numbers.includes(targetValue)) {
+    n1 += targetValue;
+  }
+  if (signos.includes(targetValue)) {
+  }
 
-  return false;
+  actualizarPantalla(n1, display);
+  if (n2) {
+    actualizarPantalla(n2, displayTop);
+  }
 };
-
-const escribirPantalla = function (x) {
-  if (verifyButton(x)) return;
-  display.value += x.dataset.value;
-};
-const borrarPantalla = function () {
-  display.value = "";
-};
-const borrarUltimoCaracter = function () {
-  display.value = display.value.slice(0, -1);
-};
-const operar = function () {
+const actualizarPantalla = function (datos, pantalla) {
   try {
-    display.value = eval(display.value);
+    pantalla.textContent = datos;
   } catch (error) {
-    display.value = "Error";
+    console.log(error);
   }
 };
-
-teclado.addEventListener("click", (e) => {
-  let selector = e.target.dataset.value;
-
-  switch (selector) {
-    case "DEL":
-      borrarUltimoCaracter();
-      break;
-    case "C":
-      borrarPantalla();
-      break;
-    case "=":
-      if (display.value !== "") operar(display.value);
-      break;
-    default:
-      escribirPantalla(e.target);
-  }
-});
 
 teclado.appendChild(createHTMLButtons(buttons));
+
+teclado.addEventListener("click", (event) => {
+  let target = event.target;
+  let targetValue = target.dataset.value;
+  if (targetValue !== undefined) {
+    pulsarBoton(targetValue);
+  }
+});
