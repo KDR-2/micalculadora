@@ -29,10 +29,10 @@ const calculadora = document.getElementById("calculador");
 const display = document.getElementById("input");
 const displayTop = document.getElementById("sup-input");
 const teclado = document.getElementById("teclado");
+
+let temporal = "";
 let n1 = "";
-let n2 = "";
-let operator = "";
-let result = "";
+let op = "";
 
 const createHTMLButtons = function (buttons) {
   buttons.reverse();
@@ -48,48 +48,51 @@ const createHTMLButtons = function (buttons) {
   }
   return contenedor;
 };
-
+// const transpasardatos = function () {
+//   n1 = n;
+//   n = "";
+// };
 const borrarUltimoCaracter = (datos) => datos.slice(0, -1);
-const operar = function () {};
-
+const stage = function (targetValue) {
+  n1 = temporal;
+  temporal = "";
+  op = targetValue;
+  return op;
+};
+const operar = function (temporal, n1, op) {
+  temporal = eval(`${Number(n1)}${op}${Number(temporal)}`);
+  return temporal;
+};
 const pulsarBoton = function (targetValue) {
   if (funciones.includes(targetValue)) {
     switch (targetValue) {
       case "CE":
+        temporal = "";
         n1 = "";
-        n2 = "";
-        operator = "";
-        result = "";
         break;
       case "C":
-        n1 = "";
-        operator = "";
+        temporal = "";
         break;
       case "DEL":
-        n1 = borrarUltimoCaracter(n1);
+        temporal = borrarUltimoCaracter(temporal);
         break;
       case "=":
-        operar();
+        temporal = operar(temporal, n1, op);
+        n1 = "";
         break;
     }
   }
   if (numbers.includes(targetValue)) {
-    n1 += targetValue;
+    temporal += targetValue;
   }
   if (signos.includes(targetValue)) {
+    op = stage(targetValue);
   }
-
-  actualizarPantalla(n1, display);
-  if (n2) {
-    actualizarPantalla(n2, displayTop);
-  }
+  actualizarPantalla(temporal, n1);
 };
-const actualizarPantalla = function (datos, pantalla) {
-  try {
-    pantalla.textContent = datos;
-  } catch (error) {
-    console.log(error);
-  }
+const actualizarPantalla = function (datos, datos2 = "") {
+  display.textContent = datos;
+  displayTop.textContent = datos2;
 };
 
 teclado.appendChild(createHTMLButtons(buttons));
