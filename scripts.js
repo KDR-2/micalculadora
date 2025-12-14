@@ -1,19 +1,19 @@
 const buttons = [
   "=",
-  0,
+  "0",
   ".",
   "+",
-  3,
-  2,
-  1,
+  "3",
+  "2",
+  "1",
   "-",
-  6,
-  5,
-  4,
+  "6",
+  "5",
+  "4",
   "*",
-  9,
-  8,
-  7,
+  "9",
+  "8",
+  "7",
   "/",
   "DEL",
   "C",
@@ -29,9 +29,10 @@ const calculadora = document.getElementById("calculador");
 const display = document.getElementById("input");
 const displayTop = document.getElementById("sup-input");
 const teclado = document.getElementById("teclado");
+const signo = document.getElementById("operator");
 
 let temporal = "";
-let n1 = "";
+let temporal2 = "";
 let op = "";
 
 const createHTMLButtons = function (buttons) {
@@ -52,51 +53,62 @@ const createHTMLButtons = function (buttons) {
 //   n1 = n;
 //   n = "";
 // };
-const borrarUltimoCaracter = (datos) => datos.slice(0, -1);
+const borrarUltimoCaracter = function (datos) {
+  return datos.slice(0, -1)};
+  
 const stage = function (targetValue) {
   n1 = temporal;
   temporal = "";
   op = targetValue;
   return op;
 };
-const operar = function (temporal, n1, op) {
-  temporal = eval(`${Number(n1)}${op}${Number(temporal)}`);
-  return temporal;
+const operar = function (temporal = 0, n1 = 0, op) {
+  return eval(`${Number(n1)}${op}${Number(temporal)}`).toString();
+};
+
+const actualizarPantalla = function (datos, datos2, op) {
+  display.textContent = datos;
+  displayTop.textContent = datos2;
+  signo.textContent = op;
 };
 const pulsarBoton = function (targetValue) {
   if (funciones.includes(targetValue)) {
-    switch (targetValue) {
-      case "CE":
+    if (targetValue === "CE") {
+      temporal = "";
+      temporal2 = "";
+      op = "";
+    }
+    if (targetValue === "C") {
         temporal = "";
-        n1 = "";
-        break;
-      case "C":
+    }
+    if (targetValue === "DEL") {
+      temporal !== "" ? (temporal = borrarUltimoCaracter(temporal)) : null;
+    }
+    if (targetValue === "=") {
+      temporal2 = operar(temporal, temporal2, op);
         temporal = "";
-        break;
-      case "DEL":
-        temporal = borrarUltimoCaracter(temporal);
-        break;
-      case "=":
-        temporal = operar(temporal, n1, op);
-        n1 = "";
-        break;
+      op = "";
     }
   }
-  if (numbers.includes(targetValue)) {
+  if (numbers.includes(targetValue) && !(temporal2 !== "" && op === "")) {
     temporal += targetValue;
   }
   if (signos.includes(targetValue)) {
-    op = stage(targetValue);
+    if (temporal !== "" && temporal2 !== "") {
+      temporal2 = operar(temporal, temporal2, op);
+      op = targetValue;
+      temporal = "";
+    } else {
+      op = targetValue;
+      if (temporal2 === "") {
+        temporal2 = temporal;
+      }
+      temporal = "";
+    }
   }
-  actualizarPantalla(temporal, n1);
+  actualizarPantalla(temporal, temporal2, op);
 };
-const actualizarPantalla = function (datos, datos2 = "") {
-  display.textContent = datos;
-  displayTop.textContent = datos2;
-};
-
 teclado.appendChild(createHTMLButtons(buttons));
-
 teclado.addEventListener("click", (event) => {
   let target = event.target;
   let targetValue = target.dataset.value;
