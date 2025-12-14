@@ -49,19 +49,11 @@ const createHTMLButtons = function (buttons) {
   }
   return contenedor;
 };
-// const transpasardatos = function () {
-//   n1 = n;
-//   n = "";
-// };
+
 const borrarUltimoCaracter = function (datos) {
-  return datos.slice(0, -1)};
-  
-const stage = function (targetValue) {
-  n1 = temporal;
-  temporal = "";
-  op = targetValue;
-  return op;
+  return datos.slice(0, -1);
 };
+
 const operar = function (temporal = 0, n1 = 0, op) {
   return eval(`${Number(n1)}${op}${Number(temporal)}`).toString();
 };
@@ -79,14 +71,14 @@ const pulsarBoton = function (targetValue) {
       op = "";
     }
     if (targetValue === "C") {
-        temporal = "";
+      temporal = "";
     }
     if (targetValue === "DEL") {
       temporal !== "" ? (temporal = borrarUltimoCaracter(temporal)) : null;
     }
     if (targetValue === "=") {
       temporal2 = operar(temporal, temporal2, op);
-        temporal = "";
+      temporal = "";
       op = "";
     }
   }
