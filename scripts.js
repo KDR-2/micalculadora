@@ -1,29 +1,39 @@
 const buttons = [
   "=",
-  0,
+  "0",
   ".",
   "+",
-
-  1,
-  2,
-  3,
-
-  4,
-  5,
-  6,
+  "3",
+  "2",
+  "1",
   "-",
-  7,
-  8,
-  9,
+  "6",
+  "5",
+  "4",
   "*",
+  "9",
+  "8",
+  "7",
   "/",
-  "C",
   "DEL",
+  "C",
+  "CE",
 ];
+
+const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const signos = [".", "+", "-", "*", "/"];
+const funciones = ["DEL", "C", "CE", "="];
+const botones = [...numbers, ...signos, ...funciones];
 
 const calculadora = document.getElementById("calculador");
 const display = document.getElementById("input");
+const displayTop = document.getElementById("sup-input");
 const teclado = document.getElementById("teclado");
+const signo = document.getElementById("operator");
+
+let temporal = "";
+let temporal2 = "";
+let op = "";
 
 const createHTMLButtons = function (buttons) {
   buttons.reverse();
@@ -39,60 +49,66 @@ const createHTMLButtons = function (buttons) {
   }
   return contenedor;
 };
-// Serie de evaluaciones para poder escribir el contenido de un boton en la pantalla de la calculadora:
-// Un número será seraparado de otro siempre que haya un signo - cada número permite un . para separar decimales - * y / no puede colocarse con la pantalla vacia, no se puede cerrar un parentesis sin
-const verifyButton = function (botonPulsado) {
-  const signos = [".", "+", "-", "*", "/", "(", ")"];
 
-  let lastCharOfScreen = display.value[display.value.length - 1];
-
-  if (
-    lastCharOfScreen === botonPulsado.dataset.value &&
-    signos.includes(lastCharOfScreen)
-  )
-    return true;
-  if (botonPulsado.dataset.value === undefined) return true;
-
-  return false;
+const borrarUltimoCaracter = function (datos) {
+  return datos.slice(0, -1);
 };
 
-const escribirPantalla = function (x) {
-  if (verifyButton(x)) return;
-  display.value += x.dataset.value;
+const operar = function (temporal = 0, n1 = 0, op) {
+  return eval(`${Number(n1)}${op}${Number(temporal)}`).toString();
 };
-const borrarPantalla = function () {
-  display.value = "";
+
+const actualizarPantalla = function (datos, datos2, op) {
+  display.textContent = datos;
+  displayTop.textContent = datos2;
+  signo.textContent = op;
 };
-const borrarUltimoCaracter = function () {
-  display.value = display.value.slice(0, -1);
-};
-const operar = function () {
-  try {
-    display.value = eval(display.value);
-  } catch (error) {
-    display.value = "Error";
+const pulsarBoton = function (targetValue) {
+  if (funciones.includes(targetValue)) {
+    if (targetValue === "CE") {
+      temporal = "";
+      temporal2 = "";
+      op = "";
+    }
+    if (targetValue === "C") {
+      temporal = "";
+    }
+    if (targetValue === "DEL") {
+      temporal !== "" ? (temporal = borrarUltimoCaracter(temporal)) : null;
+    }
+    if (targetValue === "=") {
+      temporal2 = operar(temporal, temporal2, op);
+      temporal = "";
+      op = "";
+    }
   }
+  if (numbers.includes(targetValue) && !(temporal2 !== "" && op === "")) {
+    temporal += targetValue;
+  }
+  if (signos.includes(targetValue)) {
+    if (temporal !== "" && temporal2 !== "") {
+      temporal2 = operar(temporal, temporal2, op);
+      op = targetValue;
+      temporal = "";
+    } else {
+      op = targetValue;
+      if (temporal2 === "") {
+        temporal2 = temporal;
+      }
+      temporal = "";
+    }
+  }
+  actualizarPantalla(temporal, temporal2, op);
 };
-
-teclado.addEventListener("click", (e) => {
-  let selector = e.target.dataset.value;
-
-  switch (selector) {
-    case "DEL":
-      borrarUltimoCaracter();
-      break;
-    case "C":
-      borrarPantalla();
-      break;
-    case "=":
-      if (display.value !== "") operar(display.value);
-      break;
-    default:
-      escribirPantalla(e.target);
+teclado.appendChild(createHTMLButtons(buttons));
+teclado.addEventListener("click", (event) => {
+  let target = event.target;
+  let targetValue = target.dataset.value;
+  if (targetValue !== undefined) {
+    pulsarBoton(targetValue);
   }
 });
 
-teclado.appendChild(createHTMLButtons(buttons));
 ```
 Branch testing
 <p>
