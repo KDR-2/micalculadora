@@ -27,12 +27,27 @@ body {
 }
 
 .screen__inner {
+  position: relative;
   width: 100%;
   height: 2rem;
   background: transparent;
   border: none;
   text-align: right;
   padding: 0.3rem;
+  border-radius: 0.2rem;
+  margin-bottom: 0.2rem;
+  background-color: rgba(26, 26, 26, 0.096);
+  display: flex;
+  justify-content: left;
+  align-items: flex-end;
+}
+.operator {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.3rem;
+  width: 2rem;
+  height: 2rem;
+  color: rgb(238, 238, 238);
 }
 .screen__inner--up {
   /* background: #000; */

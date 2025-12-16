@@ -29,11 +29,17 @@ const calculadora = document.getElementById("calculador");
 const display = document.getElementById("input");
 const displayTop = document.getElementById("sup-input");
 const teclado = document.getElementById("teclado");
-const signo = document.getElementById("operator");
 
 let temporal = "";
 let temporal2 = "";
 let op = "";
+
+const createSignoElement = function () {
+  const container = document.createElement("div");
+  container.id = "operator";
+  container.classList.add("operator");
+  return container;
+};
 
 const createHTMLButtons = function (buttons) {
   buttons.reverse();
@@ -61,7 +67,9 @@ const operar = function (temporal = 0, n1 = 0, op) {
 const actualizarPantalla = function (datos, datos2, op) {
   display.textContent = datos;
   displayTop.textContent = datos2;
-  signo.textContent = op;
+  const signos = createSignoElement();
+  displayTop.appendChild(signos);
+  signos.textContent = op;
 };
 const pulsarBoton = function (targetValue) {
   if (funciones.includes(targetValue)) {
