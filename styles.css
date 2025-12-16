@@ -4,7 +4,7 @@
 body {
   min-height: 100vh;
   margin: 0;
-  background-color: rgb(87, 153, 206);
+  background-color: rgb(68, 103, 131);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,6 +12,8 @@ body {
   font-family: sans-serif;
 }
 .calculador {
+  position: relative;
+  z-index: 2;
   width: 80%;
   max-width: 125px;
   padding: 0.5rem;
@@ -19,7 +21,7 @@ body {
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.163);
   border-radius: 0.5rem;
   overflow: hidden;
-  /* outline: 1px solid red; */
+  background-color: #555555;
 }
 
 .screen {
