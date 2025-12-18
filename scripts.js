@@ -95,10 +95,16 @@ const pulsarBoton = function (targetValue) {
       temporal !== "" ? (temporal = borrarUltimoCaracter(temporal)) : null;
     }
     if (targetValue === "=") {
+      if (temporal2 === "") {
+        temporal2 = temporal;
+        temporal = "";
+        op = "";
+      } else {
       temporal2 = operar(temporal, temporal2, op);
       temporal = "";
       op = "";
     }
+  }
   }
   if (numbers.includes(targetValue) && !(temporal2 !== "" && op === "")) {
     let flag = validatePoint(temporal);
