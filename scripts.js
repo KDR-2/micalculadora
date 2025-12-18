@@ -20,8 +20,8 @@ const buttons = [
   "CE",
 ];
 
-const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const signos = [".", "+", "-", "*", "/"];
+const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
+const signos = ["+", "-", "*", "/"];
 const funciones = ["DEL", "C", "CE", "="];
 const botones = [...numbers, ...signos, ...funciones];
 
@@ -39,6 +39,16 @@ const createSignoElement = function () {
   container.id = "operator";
   container.classList.add("operator");
   return container;
+};
+
+/**
+ *
+ * @param {String} cadena
+ * @returns Boolean
+ */
+const validatePoint = function (cadena) {
+  const point = numbers[numbers.length - 1];
+  return cadena.includes(point);
 };
 
 const createHTMLButtons = function (buttons) {
@@ -91,6 +101,11 @@ const pulsarBoton = function (targetValue) {
     }
   }
   if (numbers.includes(targetValue) && !(temporal2 !== "" && op === "")) {
+    let flag = validatePoint(temporal);
+
+    if (targetValue === "." && flag) {
+      return;
+    }
     temporal += targetValue;
   }
   if (signos.includes(targetValue)) {
