@@ -100,11 +100,11 @@ const pulsarBoton = function (targetValue) {
         temporal = "";
         op = "";
       } else {
-      temporal2 = operar(temporal, temporal2, op);
-      temporal = "";
-      op = "";
+        temporal2 = operar(temporal, temporal2, op);
+        temporal = "";
+        op = "";
+      }
     }
-  }
   }
   if (numbers.includes(targetValue) && !(temporal2 !== "" && op === "")) {
     let flag = validatePoint(temporal);
@@ -137,12 +137,3 @@ teclado.addEventListener("click", (event) => {
     pulsarBoton(targetValue);
   }
 });
-
-```
-Branch testing
-<p>
-
-lorem10Cosas locas Mas nada
-
-</p>
-```;
